@@ -1,0 +1,23 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-accordion multi="true" *ngIf="posts.length > 0 && !isLoading"><!--Multi allow multiple pannels open at once -->
+  <mat-expansion-panel *ngFor="let post of posts"><!--*ngFor is a directive that is esentially
+  a helper tool to help iterate through a list of objects (think for loop)-->
+    <mat-expansion-panel-header>
+      {{ post.title }}
+    </mat-expansion-panel-header>
+    <div class="card">
+    <div class="post-image">
+      <img [src]="post.imagePath" [alt]="post.title">
+    </div>
+    </div>
+    <p>{{ post.content }}</p>
+    <mat-action-row *ngIf="userAuthenticated && userId == post.creator"     n>
+      <a mat-button color="primary" [routerLink]="['/edit', post.id]">Edit</a>
+      <button mat-button color="warn" (click)="onDelete(post.id)">Delete</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf="posts.length > 0">
+
+</mat-paginator>
+<p class="info-text mat-body-1" *ngIf="posts.length <= 0 && !isLoading">No posts added yet!</p>

@@ -1,0 +1,61 @@
+
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form [formGroup]="form" (submit)="onSavePost()"  *ngIf="!isLoading" enctype="multipart/form-data">
+    <mat-form-field>
+      <input matInput type="text"
+      formControlName="title"
+      placeholder="Post Title">
+        <mat-error *ngIf="form.get('title').invalid">Post Title Needed!</mat-error>
+    </mat-form-field>
+
+    <div>
+      <button mat-stroked-button color='accent' type="button" (click)="filer.click()">Image Upload</button>
+      <input type="file" #filer (change)="onFileSelect($event)">
+    </div>
+    <div class="image-preview" *ngIf="imagePreview !=='' && imagePreview && form.get('image').valid">
+      <img [src]="imagePreview" [alt]="form.value.title">
+    </div>
+
+    <mat-form-field>
+      <textarea matInput rows="4"
+      formControlName="content"
+      placeholder="Post Content"></textarea>
+        <mat-error *ngIf="form.get('content').invalid">Post Content Needed!</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color='primary' type="submit">
+      Save Post
+    </button>
+
+  </form>
+</mat-card>
+
+
+
+<!--<hr> ~This is the horizontal line above button~-->
+
+<!--~EVENT BINDING- allows develpoers to listen to features in
+      a declaritive way. So instead of using javascript to use query selector and addEventListener to the element,
+      we simply go to our HTML page and add the name of the even we want to listen to in the case (click). Then
+      the equal to the name of the method that want to execute. Method logic should be in component class.~-->
+<!--~TWO WAY BINDING- setting and reading
+        of a value allowed in angular using [(ngModel)]/ Imported from the FormsModule, it is more efeccient than
+        property binding [value] and then reading the reference point #postInput as seen above~-->
+
+  <!--~~<p>{{newPost}}</p>~STRING INTERPOLATION- {{}} can take methods or property and output the current value
+    of a property and any changes to it~~
+    <mat-form-field>
+      <input matInput type="text" [(ngModel)]="enteredTitle">
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput rows="6" [(ngModel)]="enteredContent"></textarea> <!-~TWO WAY BINDING- setting and reading
+        of a value allowed in angular using [(ngModel)]/ Imported from the FormsModule, it is more efeccient than
+        property binding [value] and then reading the reference point #postInput as seen above~->
+    </mat-form-field>
+    <button mat-raised-button color='accent' (click)="onAdddPost()">
+      Save Post
+    </button><!-~EVENT BINDING- allows develpoers to listen to features in
+      a declaritive way. So instead of using javascript to use query selector and addEventListener to the element,
+      we simply go to our HTML page and add the name of the even we want to listen to in the case (click). Then
+      the equal to the name of the method that want to execute. Method logic should be in component class.~-->
